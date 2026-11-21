@@ -88,7 +88,7 @@ In beiden Fällen gilt: **nur die Datei ohne `-sources`** in den `mods`-Ordner d
 
 ## Ehrliche Hinweise
 
-- **Im Spiel getestet ist die Mod nicht.** Die reine Logik (Voreinstellungen, Konfiguration, Automatik) ist mit `tools/run-core-tests.sh` getestet. Der Teil, der mit Minecraft zusammenarbeitet, wurde gegen den Quellcode von Fabric API und Sodium für 26.3 abgeglichen, aber nicht im Spiel gestartet. Bei einem Fehler hilft die Datei `logs/latest.log`.
+- **Im Spiel getestet ist die Mod nicht.** Geprüft sind die reine Logik (Voreinstellungen, Konfiguration, Automatik) mit `tools/run-core-tests.sh`, das Kompilieren gegen Minecraft 26.3 und der Inhalt der gebauten JAR mit `tools/check-jar.sh`. Das alles läuft bei jedem Push in GitHub Actions. Nicht geprüft ist das Verhalten im laufenden Spiel (Mixin, Optionen, Befehl). Bei einem Fehler hilft die Datei `logs/latest.log`.
 - **Mehr Leistung bringen Render-Mods.** Diese Mod ändert nur Einstellungen. Wie viel das auf deiner Hardware bringt, ist nicht gemessen.
 - Der Mixin hängt sich an `Minecraft.runTick` und zählt nur Frames. Ändert eine neuere Minecraft-Version diese Methode, startet das Spiel mit einer Mixin-Fehlermeldung statt still falsch zu laufen.
 
@@ -99,7 +99,7 @@ In beiden Fällen gilt: **nur die Datei ohne `-sources`** in den `mods`-Ordner d
 | `src/main/java/.../core` | reine Logik ohne Minecraft: Voreinstellungen, Konfiguration, Automatik (getestet) |
 | `src/client/java/.../client` | Anbindung an Minecraft: Optionen setzen, Befehl, Tick-Schleife |
 | `src/client/java/.../client/mixin` | Frame-Zähler |
-| `tools/` | lokale Tests der reinen Logik (`./tools/run-core-tests.sh`, ab JDK 21) |
+| `tools/` | `run-core-tests.sh` (Tests der reinen Logik, ab JDK 21) und `check-jar.sh` (prüft die gebaute JAR) |
 
 ## Lizenz
 
