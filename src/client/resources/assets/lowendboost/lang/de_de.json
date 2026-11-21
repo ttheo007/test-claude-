@@ -1,0 +1,17 @@
+{
+	"lowendboost.preset.applied": "Lowend Boost: Voreinstellung \"%s\" angewendet (Sichtweite %s, Simulation %s Chunks).",
+	"lowendboost.auto.enabled": "Lowend Boost: Automatische Sichtweite AN (%s bis %s Chunks; verkleinern unter %s FPS, vergrößern über %s FPS).",
+	"lowendboost.auto.disabled": "Lowend Boost: Automatische Sichtweite AUS.",
+	"lowendboost.auto.shrunk": "Lowend Boost: Sichtweite %s → %s Chunks (%s FPS).",
+	"lowendboost.auto.grown": "Lowend Boost: Sichtweite %s → %s Chunks (%s FPS).",
+	"lowendboost.auto.capped": "Lowend Boost: Sichtweite auf das Maximum von %s Chunks begrenzt.",
+	"lowendboost.range.set": "Lowend Boost: Automatische Sichtweite begrenzt auf %s bis %s Chunks.",
+	"lowendboost.range.invalid": "Das Minimum darf nicht größer sein als das Maximum.",
+	"lowendboost.status.title": "Lowend Boost – Status",
+	"lowendboost.status.view": "Sichtweite: %s Chunks, Simulation: %s Chunks",
+	"lowendboost.status.fps": "Gemessene Bildrate: %s FPS",
+	"lowendboost.status.fps_none": "Gemessene Bildrate: noch keine Messung",
+	"lowendboost.status.auto_on": "Automatische Sichtweite: AN (%s bis %s Chunks; verkleinern unter %s FPS, vergrößern über %s FPS)",
+	"lowendboost.status.auto_off": "Automatische Sichtweite: AUS (einschalten mit /lowend auto on)",
+	"lowendboost.status.presets": "Voreinstellungen: /lowend preset potato | low | balanced"
+}

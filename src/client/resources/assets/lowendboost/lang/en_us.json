@@ -1,0 +1,17 @@
+{
+	"lowendboost.preset.applied": "Lowend Boost: applied preset \"%s\" (render distance %s, simulation %s chunks).",
+	"lowendboost.auto.enabled": "Lowend Boost: automatic render distance ON (%s to %s chunks; shrink below %s FPS, grow above %s FPS).",
+	"lowendboost.auto.disabled": "Lowend Boost: automatic render distance OFF.",
+	"lowendboost.auto.shrunk": "Lowend Boost: render distance %s → %s chunks (%s FPS).",
+	"lowendboost.auto.grown": "Lowend Boost: render distance %s → %s chunks (%s FPS).",
+	"lowendboost.auto.capped": "Lowend Boost: render distance capped to the maximum of %s chunks.",
+	"lowendboost.range.set": "Lowend Boost: automatic render distance limited to %s to %s chunks.",
+	"lowendboost.range.invalid": "The minimum must not be larger than the maximum.",
+	"lowendboost.status.title": "Lowend Boost – status",
+	"lowendboost.status.view": "Render distance: %s chunks, simulation: %s chunks",
+	"lowendboost.status.fps": "Measured frame rate: %s FPS",
+	"lowendboost.status.fps_none": "Measured frame rate: no measurement yet",
+	"lowendboost.status.auto_on": "Automatic render distance: ON (%s to %s chunks; shrink below %s FPS, grow above %s FPS)",
+	"lowendboost.status.auto_off": "Automatic render distance: OFF (enable with /lowend auto on)",
+	"lowendboost.status.presets": "Presets: /lowend preset potato | low | balanced"
+}

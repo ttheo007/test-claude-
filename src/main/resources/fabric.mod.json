@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "lowendboost",
+	"version": "${version}",
+	"name": "Lowend Boost",
+	"description": "Presets and an automatic render distance for low-end PCs. Client-side only.",
+	"authors": [
+		"ttheo007"
+	],
+	"contact": {
+		"sources": "https://github.com/ttheo007/test-claude-"
+	},
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"io.github.ttheo007.lowendboost.client.LowendBoostClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "lowendboost.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

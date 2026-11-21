@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "io.github.ttheo007.lowendboost.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"MinecraftFrameMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
