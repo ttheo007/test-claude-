@@ -23,6 +23,10 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
+      - name: check jar
+        run: bash tools/check-jar.sh
+      - name: run logic tests
+        run: bash tools/run-core-tests.sh
       - name: capture build artifacts
         uses: actions/upload-artifact@v7
         with:
