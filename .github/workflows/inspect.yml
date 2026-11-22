@@ -1,0 +1,39 @@
+name: inspect
+on:
+  push:
+    branches: ['inspect-*']
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - run: chmod +x ./gradlew
+      - run: ./gradlew compileClientJava --stacktrace
+      - name: API dump
+        run: |
+          set +e
+          JARS=$(find ~/.gradle/caches -name '*.jar' 2>/dev/null | grep -v -E '/wrapper/|gradle-(api|kotlin)|groovy|kotlin-|loom-|/plugins?/')
+          CP=$(echo "$JARS" | tr '\n' ':')
+          echo "Anzahl Jars: $(echo "$JARS" | wc -l)"
+          MC=$(for j in $JARS; do unzip -l "$j" 2>/dev/null | grep -q 'net/minecraft/client/Minecraft.class' && echo "$j"; done | head -3)
+          echo "Minecraft-Jars: $MC"
+          J() { javap -p -cp "$CP" "$1" 2>&1; }
+          F() { local cls="$1" pat="$2" lim="$3"; echo; echo "##### $cls  (Filter: $pat)"; J "$cls" | grep -E "$pat" | head -n "$lim"; }
+          echo; echo "##### Klassen mit Gpu/Device/Backend/Surface/Present im Namen"
+          for j in $JARS; do unzip -l "$j" 2>/dev/null | awk '{print $4}' | grep -E 'com/mojang/(blaze3d|renderpearl)/.*(Gpu|Device|Backend|Surface|Present|Swap)[A-Za-z$0-9]*\.class$'; done | sort -u | head -90
+          echo; echo "##### Debug-Bildschirm-Eintraege"
+          for j in $MC; do unzip -l "$j" | awk '{print $4}' | grep -E 'net/minecraft/client/gui/components/debug/[A-Za-z]+\.class$'; done | sort -u | head -60
+          F com.mojang.blaze3d.systems.RenderSystem 'getDevice|Device|flipFrame|limitDisplayFPS|ackend|Renderer|Vendor|Version|present' 40
+          F com.mojang.blaze3d.systems.GpuDevice '\(' 70
+          F com.mojang.blaze3d.platform.Window '\(' 130
+          F net.minecraft.client.Minecraft 'fps|Fps|FPS|runTick|getWindow|MainRenderTarget|getSingleplayerServer|isPaused|frameTime|FrameTime|getDeltaTracker|gameRenderer|levelRenderer|isLocalServer|getCurrentServer' 60
+          F net.minecraft.client.renderer.GameRenderer ' render| renderLevel|renderItemInHand|mainRenderTarget' 30
+          F net.minecraft.client.renderer.LevelRenderer 'renderLevel|extract|ntityCount|tatistics|getLast|visibleSections|SectionRenderDispatcher|getSectionRenderDispatcher|countRendered' 40
+          F net.minecraft.server.MinecraftServer 'Tick|tick|Nanos|nanos|Mspt|mspt|getAverage' 50
+          F net.minecraft.server.integrated.IntegratedServer 'Tick|tick|Nanos|Mspt' 20
+          F net.minecraft.client.Options 'Vsync|vsync|ramerate|ackend|fullscreen|Fullscreen|guiScale|resolution|Resolution|preferred' 40
