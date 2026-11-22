@@ -18,6 +18,21 @@ loom {
 	}
 }
 
+fabricApi {
+	// Echter Spieltest: startet einen Minecraft-Client (in der CI ohne Bildschirm), betritt eine Welt und
+	// prueft die Mod im laufenden Spiel. Aufruf: ./gradlew runClientGameTest
+	// Der Test liegt in src/gametest und wird nicht in die Mod-JAR gepackt.
+	configureTests {
+		createSourceSet = true
+		modId = "lowendboost-gametest"
+		enableGameTests = false
+		enableClientGameTests = true
+		// Das Laufverzeichnis bleibt erhalten, damit die CI vorher eine options.txt mit der gewuenschten
+		// Grafik-Schnittstelle (OpenGL oder Vulkan) hineinlegen kann.
+		clearRunDirectory = false
+	}
+}
+
 dependencies {
 	// Versionen stehen in gradle.properties
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

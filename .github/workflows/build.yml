@@ -32,3 +32,40 @@ jobs:
         with:
           name: Artifacts
           path: build/libs/
+
+  # Echter Spieltest: startet den Minecraft-Client ohne Bildschirm (Software-Rendering) und prueft die Mod
+  # im Spiel. Er laeuft einmal mit OpenGL und einmal mit Vulkan, so wie bei der Fabric API selbst.
+  gametest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        graphics_backend: [opengl, vulkan]
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v6
+      - name: setup jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - name: install software vulkan driver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mesa-vulkan-drivers
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: choose graphics backend
+        run: |
+          rm -rf build/run/clientGameTest
+          mkdir -p build/run/clientGameTest
+          echo 'version:4896' > build/run/clientGameTest/options.txt
+          echo 'preferredGraphicsBackend:"${{ matrix.graphics_backend }}"' >> build/run/clientGameTest/options.txt
+      - name: run client gametest
+        run: ./gradlew runClientGameTest --stacktrace
+      - name: show game log
+        if: always()
+        run: |
+          echo "== options.txt =="; cat build/run/clientGameTest/options.txt || true
+          echo "== latest.log (letzte 400 Zeilen) =="; tail -n 400 build/run/clientGameTest/logs/latest.log || true

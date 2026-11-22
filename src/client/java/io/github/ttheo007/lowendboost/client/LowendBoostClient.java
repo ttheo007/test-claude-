@@ -33,6 +33,9 @@ public final class LowendBoostClient implements ClientModInitializer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private static final AdaptiveGovernor GOVERNOR = new AdaptiveGovernor();
 
+	/** Wird nur auf dem Render-Thread geschrieben. */
+	private static long framesSeen;
+
 	private static Path configFile;
 	private static BoostConfig config = new BoostConfig();
 	/** Die zuletzt gesehene Welt; wechselt sie, beginnt die Messung von vorn. */
@@ -52,7 +55,13 @@ public final class LowendBoostClient implements ClientModInitializer {
 
 	/** Wird vom Mixin bei jedem gerenderten Frame aufgerufen. */
 	public static void onFrame() {
+		framesSeen++;
 		GOVERNOR.onFrame(System.nanoTime());
+	}
+
+	/** Anzahl der Frames seit dem Start. Der Spieltest nutzt sie, um zu pruefen, dass der Mixin greift. */
+	public static long framesSeen() {
+		return framesSeen;
 	}
 
 	static BoostConfig config() {
